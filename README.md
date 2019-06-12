@@ -1,4 +1,4 @@
-Lanzamisiles
+# Lanzamisiles
 
 ## Trabajo Práctico Obligatorio - Introducción a la orientación a objetos
 > El equipo de analistas ha finalizado la determinación de los requerimientos de un juego de lanzamisiles.
@@ -24,18 +24,18 @@ Lanzamisiles
 * Respetar las consignas y los objetivos. 
 * La aprobación del TPO es individual ya que en la entrega final se le realizara una evaluación individual a cada integrante del grupo sobre cualquiera de las partes y/o etapas del TPO.
 
-# Pautas para la aprobación del Trabajo Practico Cuatrimestral
+## Pautas para la aprobación del Trabajo Practico Cuatrimestral
 * Cumplir con todas las entregas definidas en tiempo y forma. 
 * Aprobar todas las entregas y/o correcciones. 
 * Aprobar la evaluación final sobre TPO.
 
-# Fases de Entregas
+## Fases de Entregas
 * Fase A : Definición de los requerimientos y diagrama de clases. 
 * Fase B : Diagramas de secuencia (todos los requerimientos). 
 * Fase C : Código del negocio funcionando con controlador y test. 
 * Final : Interfaz gráfica que utilice el negocio entregado en la Fase C.
 
-# Fechas de Entrega
+## Fechas de Entrega
 * Fase A : 16/05/2019. 
 * Fase B : 30/05/2019. 
 * Fase C : 13/06/2019. 
