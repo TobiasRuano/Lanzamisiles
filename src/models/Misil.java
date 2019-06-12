@@ -12,13 +12,12 @@ public class Misil {
 	private final boolean avanza;
 	private String misilURL = "/Users/tobiasruano/eclipse-workspace/Lanzamisiles/src/imagenes/misil.png";
 
-	public Misil(Point inicio, Point fin, int velocidad, boolean sentido) {
+	public Misil(Point inicio, Point fin, int velocidad) {
 		this.velocidad = velocidad;
 		avanza = fin.x >= 400;
 		angulo = Math.atan2(Math.abs(fin.x - inicio.x), Math.abs(inicio.y - fin.y));
 		this.x = inicio.x;
 		this.y = inicio.y;
-		this.sentido = sentido;
 	}
 
 	public void moverse(int velocidad) {

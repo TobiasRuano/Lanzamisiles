@@ -28,7 +28,7 @@ public class Tanque {
 		Point origen = new Point();
 		origen.x = this.x;
 		origen.y = this.y;
-		return new Misil(origen, fin, velocidad, true);
+		return new Misil(origen, fin, velocidad);
 	}
 
 	public String getImagePath() {

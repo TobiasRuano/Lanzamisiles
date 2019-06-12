@@ -21,12 +21,12 @@ public class Controlador {
 	private int cantBarcosEliminados;
 	private boolean estaJugando = true;
 	private boolean puedeDisparar = true;
-	private Random sideBoolean;
+	private Random booleanDireccionBarco;
 
 	public Controlador(String dificultad, String nombre) {
 		this.crearTanque(nombre);
 		this.dificultad = dificultad; //TODO: implementar la dificultad de los barcos
-		this.sideBoolean = new Random(); s// boolean al azar para definir la direccion en la creaccion de los barcos
+		this.booleanDireccionBarco = new Random(); // boolean al azar para definir la direccion en la creaccion de los barcos
 	}
 
 	public int getPuntos() {
@@ -34,7 +34,7 @@ public class Controlador {
 	}
 
 	public Random getSideBoolean() {
-		return sideBoolean;
+		return booleanDireccionBarco;
 	}
 
 	public Rectangle getPosicionMisil() {
@@ -101,7 +101,7 @@ public class Controlador {
 	public void nuevoBarco() {
 		if (this.barco == null) {
 			if (this.barco == null) {
-				this.barco = new Barco(this.velocidad, sideBoolean.nextBoolean());
+				this.barco = new Barco(this.velocidad, booleanDireccionBarco.nextBoolean());
 			}
 			this.cantBarcos++;
 		}
