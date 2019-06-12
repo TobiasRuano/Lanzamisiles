@@ -4,8 +4,8 @@ import java.awt.Rectangle;
 
 public class Barco {
 
-	private final String barcoToLeftURL = "/Users/tobiasruano/eclipse-workspace/Lanzamisiles/src/imagenes/shipRight.png";
-	private final String barcoToRightURL = "/Users/tobiasruano/eclipse-workspace/Lanzamisiles/src/imagenes/shipLeft.png";
+	private final String barcoToLeftURL = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/shipRight.png";
+	private final String barcoToRightURL = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/shipLeft.png";
 	private int x;
 	private int y = 200;
 	private int velocidad;

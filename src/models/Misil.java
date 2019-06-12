@@ -10,7 +10,7 @@ public class Misil {
 	private int velocidad;
 	private double angulo;
 	private final boolean avanza;
-	private String misilURL = "/Users/tobiasruano/eclipse-workspace/Lanzamisiles/src/imagenes/misil.png";
+	private String misilURL = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/misil.png";
 
 	public Misil(Point inicio, Point fin, int velocidad) {
 		this.velocidad = velocidad;
@@ -23,7 +23,7 @@ public class Misil {
 	public void moverse(int velocidad) {
 		double xVelocidad = (velocidad)*1.5 * Math.sin(angulo);
 		double yVelocidad = (velocidad)*1.5 * Math.cos(angulo);
-		
+
 		if (avanza) {
 			this.x = this.x + xVelocidad;
 		} else {

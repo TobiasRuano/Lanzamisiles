@@ -9,7 +9,7 @@ public class Tanque {
 
 	private int x = 375;
 	private int y = 500;
-	private String tanqueURL = "/Users/tobiasruano/eclipse-workspace/Lanzamisiles/src/imagenes/tank.png";
+	private String tanqueURL = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/tank.png";
 	private String nombre;
 
 	public Tanque(String nombre) {

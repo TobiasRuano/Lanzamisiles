@@ -15,7 +15,7 @@ public class Controlador {
 	private Tanque tanque;
 	private Barco barco;
 	private Misil misil;
-	
+
 	private String dificultad;
 	private int vidas = 3;
 	private int puntos;
@@ -52,11 +52,18 @@ public class Controlador {
 		this.jugador.setPuntos(puntos);
 	}
 
+	public Tanque crearTanque(String nombre) {
+		if (this.tanque == null) {
+			this.tanque = new Tanque(nombre);
+		}
+		return this.tanque;
+	}
+
 	public int getPuntos() {
 		return puntos;
 	}
 
-	public Random getSideBoolean() {
+	public Random getBooleanDireccionBarco() {
 		return booleanDireccionBarco;
 	}
 
@@ -183,13 +190,6 @@ public class Controlador {
 		if (this.puntos >= 300) {
 			this.vidas++;
 		}
-	}
-
-	public Tanque crearTanque(String nombre) {
-		if (this.tanque == null) {
-			this.tanque = new Tanque(nombre);
-		}
-		return this.tanque;
 	}
 
 	public Misil moverMisil() {
