@@ -33,9 +33,9 @@ public class Controlador {
 		this.booleanDireccionBarco = new Random(); // boolean al azar para definir la direccion en la creaccion de los barcos
 	}
 
-	public Jugador crearJugador() {
+	public Jugador crearJugador(String nombre) {
 		if (this.jugador == null) {
-			this.jugador = new jugador(nombre);
+			this.jugador = new Jugador(nombre);
 		}
 		return this.jugador;
 	}
@@ -44,11 +44,11 @@ public class Controlador {
 		return this.jugador.getNombre();
 	}
 
-	public Int getPuntosJugador() {
+	public int getPuntosJugador() {
 		return this.jugador.getPuntos();
 	}
 
-	public Void setPuntosJugador() {
+	public void setPuntosJugador() {
 		this.jugador.setPuntos(puntos);
 	}
 
@@ -118,7 +118,7 @@ public class Controlador {
 		} else {
 			this.vidas--;
 		}
-		this.jugador.setPuntos();
+		this.jugador.setPuntos(puntos);
 		return avanza;
 	}
 
