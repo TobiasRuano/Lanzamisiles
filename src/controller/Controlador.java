@@ -7,12 +7,15 @@ import java.util.Random;
 import models.Misil;
 import models.Tanque;
 import models.Barco;
+import models.Jugador;
 
 public class Controlador {
 
+  private Jugador jugador;
 	private Tanque tanque;
 	private Barco barco;
 	private Misil misil;
+	
 	private String dificultad;
 	private int vidas = 3;
 	private int puntos;
@@ -24,9 +27,29 @@ public class Controlador {
 	private Random booleanDireccionBarco;
 
 	public Controlador(String dificultad, String nombre) {
-		this.crearTanque(nombre);
+		this.crearJugador(nombre);
+		this.crearTanque(nombre); // En vez de pasar un string, deberia quizas pasar un objeto jugador.
 		this.dificultad = dificultad; //TODO: implementar la dificultad de los barcos
 		this.booleanDireccionBarco = new Random(); // boolean al azar para definir la direccion en la creaccion de los barcos
+	}
+
+	public Jugador crearJugador() {
+		if (this.jugador == null) {
+			this.jugador = new jugador(nombre);
+		}
+		return this.jugador;
+	}
+
+	public String getNombreJugador() {
+		return this.jugador.getNombre();
+	}
+
+	public Int getPuntosJugador() {
+		return this.jugador.getPuntos();
+	}
+
+	public Void setPuntosJugador() {
+		this.jugador.setPuntos(puntos);
 	}
 
 	public int getPuntos() {
@@ -95,6 +118,7 @@ public class Controlador {
 		} else {
 			this.vidas--;
 		}
+		this.jugador.setPuntos();
 		return avanza;
 	}
 
