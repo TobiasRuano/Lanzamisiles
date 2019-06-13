@@ -4,10 +4,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Random;
 
-import models.Misil;
-import models.Tanque;
-import models.Barco;
-import models.Jugador;
+import models.*;
 
 public class Controlador {
 
@@ -151,10 +148,9 @@ public class Controlador {
 		return disparo;
 	}
 
-	public boolean impacto() {
+	public boolean verificarImpacto() {
 		if (this.barco != null && this.misil != null) {
 			boolean hayImpacto = mismaPosicion(this.barco.getX(), this.barco.getY(), this.misil.getX(), this.misil.getY());
-
 			if (hayImpacto) {
 				this.incrementarPuntos(20);
 				this.cantBarcosEliminados++;
@@ -203,18 +199,11 @@ public class Controlador {
 		this.misil = null;
 	}
 
-	public boolean getSentidoBarco() {
+	public boolean sentidoBarco() {
 		if(this.barco != null) {
 			return this.barco.getSentido();
 		}
 		return true;
-	}
-
-	public Rectangle getPosicionBarco() {
-		if(this.barco != null) {
-			return this.barco.getPosicion();
-		}
-		return null;
 	}
 
 	public void eliminarBarco() {
