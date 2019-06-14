@@ -4,30 +4,32 @@ import models.*;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JButton;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
+import models.*;
+import controller.Controlador;
 
 public class VentanaJuego extends JFrame {
-	Tanque tanque;
-	Barco barco;
-	Misil misil;
  	VentanaPrincipal aux;
 	JButton botonSalir;
 	JLabel labelPuntaje;
 	JLabel labelVidas;
 	JLabel labelNivel;
+	JLabel tanque;
+	JLabel misil;
+	JLabel barco;
 
-	public VentanaJuego(JFrame principal) {
+	public VentanaJuego(JFrame principal, String nombre, String dificultad) {
 		this.aux = (VentanaPrincipal) principal;
-		configurar();
+		configurar(nombre);
 		eventos();
 	}
 
-	private void configurar() {
+	private void configurar(String nombre) {
 		Container contenedor = this.getContentPane();
     contenedor.setLayout(null);
 
@@ -38,11 +40,20 @@ public class VentanaJuego extends JFrame {
 		labelPuntaje = new JLabel("Puntaje: 0");
 		labelVidas = new JLabel("Vidas: 3");
 		labelNivel = new JLabel("Nivel: 0");
+		tanque = new JLabel();
+		barco = new JLabel();
+		misil = new JLabel();
 
 		botonSalir.setBounds(740, 0, 60, 40);
-
+		labelNivel.setBounds(25, 25, 75, 25);
+		labelVidas.setBounds(130, 25, 75, 25);
+		labelPuntaje.setBounds(235, 25, 75, 25);
+		tanque.setBounds(270, 475, 65, 125);
 
 		contenedor.add(botonSalir);
+		contenedor.add(labelNivel);
+		contenedor.add(labelVidas);
+		contenedor.add(labelPuntaje);
 	}
 
 	private void eventos() {
