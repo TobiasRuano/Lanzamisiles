@@ -32,14 +32,16 @@ public class VentanaRanking extends JFrame{
     this.setSize(800, 600);
     this.setResizable(false);
 
-    botonSalir = new JButton("Salir");
-    botonSalir.setBounds(740, 0, 60, 40);
+    botonSalir = new JButton("Atras");
+    botonSalir.setBounds(715, 25, 60, 40);
 
     contenedor.add(botonSalir);
 
   }
 
   private void eventos() {
+    this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    
     botonSalir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -8,7 +8,7 @@ import models.*;
 
 public class Controlador {
 
-  private Jugador jugador;
+	private Jugador jugador;
 	private Tanque tanque;
 	private Barco barco;
 	private Misil misil;
@@ -22,6 +22,7 @@ public class Controlador {
 	private boolean estaJugando = true;
 	private boolean puedeDisparar = true;
 	private Random booleanDireccionBarco;
+  private int totalPuntos = 0;
 
 	public Controlador(String dificultad, String nombre) {
 		this.crearJugador(nombre);
@@ -43,6 +44,10 @@ public class Controlador {
 
 	public int getPuntosJugador() {
 		return this.jugador.getPuntos();
+	}
+
+	public int getTotalPuntos() {
+		return totalPuntos;
 	}
 
 	public void setPuntosJugador() {
@@ -76,6 +81,10 @@ public class Controlador {
 		return velocidad;
 	}
 
+	public int getNivel() {
+		return (velocidad / 2) - 1;
+	}
+
 	public int getCantBarcos() {
 		return cantBarcos;
 	}
@@ -101,7 +110,7 @@ public class Controlador {
 	}
 
 	public boolean jugando() {
-		return this.cantBarcos < 10;
+		return this.cantBarcos != 10;
 	}
 
 	public Barco moverBarco(int x) {
@@ -135,11 +144,7 @@ public class Controlador {
 		}
 	}
 
-	public boolean dispararBarco() {
-		Point fin = new Point();
-		fin.y = 100;
-		fin.x = 100;
-		// Creo dos puntos para fijarlos como destino del misil -- Luego seran modificados con una mejor formar
+	public boolean dispararBarco(Point fin) {
 		boolean disparo = this.tanque != null && this.puedeDisparar;
 		if (disparo == true) {
 			this.puedeDisparar = false;
@@ -183,8 +188,10 @@ public class Controlador {
 
 	private void incrementarPuntos(int x) {
 		this.puntos += x;
+		totalPuntos = totalPuntos + x;
 		if (this.puntos >= 300) {
 			this.vidas++;
+			this.puntos = this.puntos - 300;
 		}
 	}
 
@@ -208,6 +215,10 @@ public class Controlador {
 
 	public void eliminarBarco() {
 		this.barco = null;
+	}
+
+	public boolean perdio() {
+		return this.vidas == 0;
 	}
 
 }

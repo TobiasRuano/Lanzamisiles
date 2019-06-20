@@ -9,12 +9,12 @@ public class Misil {
 	private double y;
 	private int velocidad;
 	private double angulo;
-	private final boolean avanza;
+	private final boolean direccion;
 	private String misilURL = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/misil.png";
 
 	public Misil(Point inicio, Point fin, int velocidad) {
 		this.velocidad = velocidad;
-		avanza = fin.x >= 400;
+		direccion = fin.x >= 400;
 		angulo = Math.atan2(Math.abs(fin.x - inicio.x), Math.abs(inicio.y - fin.y));
 		this.x = inicio.x;
 		this.y = inicio.y;
@@ -24,11 +24,12 @@ public class Misil {
 		double xVelocidad = (velocidad)*1.5 * Math.sin(angulo);
 		double yVelocidad = (velocidad)*1.5 * Math.cos(angulo);
 
-		if (avanza) {
+		if (direccion) {
 			this.x = this.x + xVelocidad;
 		} else {
 			this.x = this.x - xVelocidad;
 		}
+		this.y = this.y - yVelocidad;
 	}
 
 	public String getImagePath() {
