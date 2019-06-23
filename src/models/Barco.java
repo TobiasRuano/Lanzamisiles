@@ -20,7 +20,7 @@ public class Barco {
 			this.path = barcoToRightURL;
 		} else {
 			this.velocidad = -velocidad;
-			this.x = 1000; //TODO: fuera de la ventana por 100 pixeles margen derecho
+			this.x = 900;
 			this.path = barcoToLeftURL;
 		}
 	}

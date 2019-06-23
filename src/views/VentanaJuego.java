@@ -29,6 +29,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private JLabel tanque = new JLabel();
 	private JLabel misil = new JLabel();
 	private JLabel barco = new JLabel();
+	private JLabel mira = new JLabel();
 	private Container contenedor;
 	private Controlador controlador;
 	private Timer movimientoTimer;
@@ -38,16 +39,17 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private Timer impactoTimer;
 	private Point destino;
 
-	public VentanaJuego(JFrame principal, String nombre, String dificultad) {
-		this.controlador = new Controlador(dificultad, nombre);
-		configurar(nombre);
-		presentarTanque(this.controlador.crearTanque(nombre));
+	private String urlImagenMira = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/target.png";
 
+	public VentanaJuego(JFrame principal, String nombre, String dificultad) {
+		configurar(dificultad, nombre);
 		this.aux = (VentanaPrincipal) principal;
 		eventos(contenedor);
 	}
 
-	private void configurar(String nombre) {
+	private void configurar(String dificultad, String nombre) {
+		this.controlador = new Controlador(dificultad, nombre);
+
 		contenedor = this.getContentPane();
 		contenedor.setLayout(null);
 		contenedor.setBackground(Color.white);
@@ -68,21 +70,27 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		labelPuntaje.setBounds(235, 25, 75, 25);
 		tanque.setBounds(400, 500, 100, 100);
 		barco.setBounds(400, 75, 100, 100);
+		mira.setBounds(400, 50, 50, 50);
+
+		mira.setIcon(new ImageIcon(urlImagenMira));
 
 		labelNivel.setText("Nivel: " + (controlador.getNivel() + 1));
 		labelVidas.setText("Vidas: " + controlador.getVidas());
 		labelPuntaje.setText("Puntos: " + controlador.getPuntos());
 
 		barco.setVisible(true);
-		
+
 		//contenedor.add(botonSalir); //TODO: arranca seleccionado, no puedo disparar.
 		//this.getRootPane().setDefaultButton(null);
-		
+
 		contenedor.add(labelNivel);
 		contenedor.add(labelVidas);
 		contenedor.add(labelPuntaje);
 		contenedor.add(tanque);
 		contenedor.add(barco);
+		contenedor.add(mira);
+
+		presentarTanque(this.controlador.crearTanque(nombre));
 	}
 
 	private void eventos(Container contenedor) {
@@ -290,16 +298,25 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent arg0) {
-		if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-			this.destino.x = this.destino.x - 20;
-			System.out.println(this.destino.x);
-		}
-
 		if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-			this.destino.x = this.destino.x + 20;
+			this.destino.x = this.destino.x + 30;
+			if (this.destino.x > 760) {
+				this.destino.x = 760;
+			}
+			this.mira.setBounds(this.destino.x, 50, 50, 50);
 			System.out.println(this.destino.x);
 		}
 
+		if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
+			this.destino.x = this.destino.x - 30;
+			if (this.destino.x < 0) {
+				this.destino.x = 0;
+			}
+			this.mira.setBounds(this.destino.x, 50, 50, 50);
+			System.out.println(this.destino.x);
+		}
+
+		//Este metodo es para la potencia del misil
 		if (arg0.getKeyCode() == KeyEvent.VK_SPACE ) {
 			System.out.println("Potencia de disparo");
 			//TODO: agregar timer para la potancia del disparo
