@@ -7,8 +7,8 @@ import models.Misil;
 
 public class Tanque {
 
-	private int x = 375;
-	private int y = 500;
+	private int x = 500;
+	private int y = 600;
 	private String tanqueURL = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/tank.png";
 	private String nombre;
 

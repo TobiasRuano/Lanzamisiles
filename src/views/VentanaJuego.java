@@ -23,9 +23,13 @@ public class VentanaJuego extends JFrame implements KeyListener {
 
 	private VentanaPrincipal aux;
 	private JButton botonSalir;
-	private JLabel labelPuntaje = new JLabel("Puntaje: 0");
+	private JLabel labelPuntajeAProxVida = new JLabel("Nueva Vida en : 300 pts");
+	private JLabel labelPuntajeTotal = new JLabel("Puntaje Total: 0");
 	private JLabel labelVidas = new JLabel("Vidas: 3");
 	private JLabel labelNivel = new JLabel("Nivel: 1");
+	private JLabel labelBarcosHundidos = new JLabel();
+	private JLabel labelBarcosRestantes = new JLabel();
+
 	private JLabel tanque = new JLabel();
 	private JLabel misil = new JLabel();
 	private JLabel barco = new JLabel();
@@ -33,7 +37,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private Container contenedor;
 	private Controlador controlador;
 	private Timer movimientoTimer;
-	private Timer fueraVistaTimer;
+	private Timer fueraVentanaTimer;
 	private Timer labelsTimer;
 	private Timer cargaMisilTimer;
 	private Timer impactoTimer;
@@ -54,7 +58,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		contenedor.setLayout(null);
 		contenedor.setBackground(Color.white);
 
-		this.setSize(800, 600);
+		this.setSize(1000, 700);
 		this.setResizable(false);
 		this.setTitle("Lanzamisiles");
 		addKeyListener(this);
@@ -62,21 +66,28 @@ public class VentanaJuego extends JFrame implements KeyListener {
 
 		botonSalir = new JButton("Salir");
 
-		destino = new Point(400, 600);
+		destino = new Point(500, 600);
 
-		botonSalir.setBounds(715, 25, 60, 40);
-		labelNivel.setBounds(25, 25, 75, 25);
-		labelVidas.setBounds(130, 25, 75, 25);
-		labelPuntaje.setBounds(235, 25, 75, 25);
-		tanque.setBounds(400, 500, 100, 100);
-		barco.setBounds(400, 75, 100, 100);
-		mira.setBounds(400, 50, 50, 50);
+		labelNivel.setBounds(20, 25, 75, 25);
+		labelVidas.setBounds(115, 25, 75, 25);
+		labelPuntajeAProxVida.setBounds(220, 25, 150, 25);
+		labelPuntajeTotal.setBounds(390, 25, 150, 25);
+		labelBarcosHundidos.setBounds(580, 25, 150, 25);
+		labelBarcosRestantes.setBounds(750, 25, 150, 25);
+		botonSalir.setBounds(920, 25, 60, 25);
+
+		tanque.setBounds(500, 600, 100, 100);
+		barco.setBounds(500, 75, 100, 100);
+		mira.setBounds(500, 50, 50, 50);
 
 		mira.setIcon(new ImageIcon(urlImagenMira));
 
 		labelNivel.setText("Nivel: " + (controlador.getNivel() + 1));
 		labelVidas.setText("Vidas: " + controlador.getVidas());
-		labelPuntaje.setText("Puntos: " + controlador.getPuntos());
+		labelPuntajeAProxVida.setText("Nueva Vida en: " + (300 - controlador.getPuntos()) + "pts");
+		labelBarcosHundidos.setText("Barcos Hundidos: " + controlador.getCantBarcosEliminados());
+		labelPuntajeTotal.setText("Puntaje Total: " + controlador.getTotalPuntos());
+		labelBarcosRestantes.setText("Barcos Restantes: " + ( 10 - controlador.getCantBarcos()));
 
 		barco.setVisible(true);
 
@@ -85,7 +96,10 @@ public class VentanaJuego extends JFrame implements KeyListener {
 
 		contenedor.add(labelNivel);
 		contenedor.add(labelVidas);
-		contenedor.add(labelPuntaje);
+		contenedor.add(labelPuntajeAProxVida);
+		contenedor.add(labelPuntajeTotal);
+		contenedor.add(labelBarcosHundidos);
+		contenedor.add(labelBarcosRestantes);
 		contenedor.add(tanque);
 		contenedor.add(barco);
 		contenedor.add(mira);
@@ -124,12 +138,12 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private void crearTempFueraVista() {
 		ActionListener vistaL = new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				calcularMisilFueraVista();
-				calcularBarcoFueraVista();
+				calcularMisilFueraVentana();
+				calcularBarcoFueraVentana();
 			}
 		};
-		this.fueraVistaTimer = new Timer(100, vistaL);
-		this.fueraVistaTimer.start();
+		this.fueraVentanaTimer = new Timer(100, vistaL);
+		this.fueraVentanaTimer.start();
 	}
 
 	private void crearTempLabels() {
@@ -222,42 +236,42 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		}
 	}
 
-	private void calcularMisilFueraVista() {
+	private void calcularMisilFueraVentana() {
 		Rectangle posicion = controlador.getPosicionMisil();
 		if (this.misil != null && posicion != null) {
-			if (fueraDeVista(posicion) == true) {
+			if (fueraDeVentana(posicion) == true) {
 				this.controlador.eliminarMisil();
 			}
 		}
 	}
 
-	private void calcularBarcoFueraVista() {
+	private void calcularBarcoFueraVentana() {
 		Rectangle posicion = controlador.posicionBarco();
 		boolean direccion = controlador.sentidoBarco();
 		if (this.barco != null && posicion != null) {
-			if (this.barcoFueraDeVista(direccion, posicion)) {
+			if (this.barcoFueraDeVentana(direccion, posicion)) {
 				this.controlador.eliminarBarco();
 			}
 		}
 	}
 
-	private boolean fueraDeVista(Rectangle posicion) {
+	private boolean fueraDeVentana(Rectangle posicion) {
 		int arriba = (int) posicion.getMinY();
 		int abajo = (int) posicion.getMaxY();
 		int izq = (int) posicion.getMinX();
 		int der = (int) posicion.getMaxX();
-		if (izq > 800 || der < 0 || arriba > 600 || abajo < 0) {
+		if (izq > 1000 || der < 0 || arriba > 700 || abajo < 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	private boolean barcoFueraDeVista(boolean direccion, Rectangle posicion) {
+	private boolean barcoFueraDeVentana(boolean direccion, Rectangle posicion) {
 		int izq = (int) posicion.getMinX();
 		int der = (int) posicion.getMaxX();
 		if (direccion == true) {
-			return izq > 800;
+			return izq > 1000;
 		} else {
 			return der < 0;
 		}
@@ -270,11 +284,18 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			this.misil = null;
 			this.barco = null;
 		}
+		actualizarBarcos();
+	}
+
+	private void actualizarBarcos() {
+		labelBarcosHundidos.setText("Barcos Hundidos: " + controlador.getCantBarcosEliminados());
+		labelBarcosRestantes.setText("Barcos Restantes: " + ( 10 - controlador.getCantBarcos()));
 	}
 
 	private void actualizarPuntaje() {
 		int puntos = controlador.getPuntos();
-		labelPuntaje.setText("Puntos: " + puntos);
+		labelPuntajeAProxVida.setText("Nueva Vida en: " + (300 - controlador.getPuntos()) + "pts");
+		labelPuntajeTotal.setText("Puntaje Total: " + controlador.getTotalPuntos());
 	}
 
 	private void actualizarVidas() {
@@ -300,8 +321,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
 			this.destino.x = this.destino.x + 30;
-			if (this.destino.x > 760) {
-				this.destino.x = 760;
+			if (this.destino.x > 960) {
+				this.destino.x = 960;
 			}
 			this.mira.setBounds(this.destino.x, 50, 50, 50);
 			System.out.println(this.destino.x);

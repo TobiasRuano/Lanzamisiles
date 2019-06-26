@@ -7,7 +7,7 @@ public class Barco {
 	private final String barcoToLeftURL = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/shipRight.png";
 	private final String barcoToRightURL = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/shipLeft.png";
 	private int x;
-	private int y = 200;
+	private int y = 75;
 	private int velocidad;
 	private String path;
 	private boolean sentido;
@@ -16,11 +16,11 @@ public class Barco {
 		this.sentido = sentido;
 		if (sentido == true) {
 			this.velocidad = velocidad;
-			this.x = -100;
+			this.x = -200;
 			this.path = barcoToRightURL;
 		} else {
 			this.velocidad = -velocidad;
-			this.x = 900;
+			this.x = 1000;
 			this.path = barcoToLeftURL;
 		}
 	}

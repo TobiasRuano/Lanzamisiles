@@ -11,7 +11,7 @@ public class Jugador {
 
 	private void setNombre(String nombre) {
 		this.nombre = nombre;
-	}// no seria necesario que la tenga publica, ya que nadie de afuera cambia el valor sin crear un nuevo objeto
+	}
 
 	public String getNombre() {
 		return this.nombre;
