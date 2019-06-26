@@ -7,12 +7,12 @@ public class Misil {
 
 	private double x;
 	private double y;
-	private int velocidad;
+	private double velocidad;
 	private double angulo;
 	private final boolean direccion;
 	private String misilURL = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/misil.png";
 
-	public Misil(Point inicio, Point fin, int velocidad) {
+	public Misil(Point inicio, Point fin, double velocidad) {
 		this.velocidad = velocidad;
 		direccion = fin.x >= 400;
 		angulo = Math.atan2(Math.abs(fin.x - inicio.x), Math.abs(inicio.y - fin.y));
@@ -20,7 +20,7 @@ public class Misil {
 		this.y = inicio.y;
 	}
 
-	public void moverse(int velocidad) {
+	public void moverse(double velocidad) {
 		double xVelocidad = (velocidad)*1.5 * Math.sin(angulo);
 		double yVelocidad = (velocidad)*1.5 * Math.cos(angulo);
 

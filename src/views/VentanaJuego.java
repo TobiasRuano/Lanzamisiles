@@ -30,6 +30,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private JLabel labelBarcosHundidos = new JLabel();
 	private JLabel labelBarcosRestantes = new JLabel();
 
+	private double multiplicadorPotencia = 1;
+
 	private JLabel tanque = new JLabel();
 	private JLabel misil = new JLabel();
 	private JLabel barco = new JLabel();
@@ -54,9 +56,9 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private void configurar(String dificultad, String nombre) {
 		this.controlador = new Controlador(dificultad, nombre);
 
-		contenedor = this.getContentPane();
-		contenedor.setLayout(null);
-		contenedor.setBackground(Color.white);
+		this.contenedor = this.getContentPane();
+		this.contenedor.setLayout(null);
+		this.contenedor.setBackground(Color.white);
 
 		this.setSize(1000, 700);
 		this.setResizable(false);
@@ -294,7 +296,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 
 	private void actualizarPuntaje() {
 		int puntos = controlador.getPuntos();
-		labelPuntajeAProxVida.setText("Nueva Vida en: " + (300 - controlador.getPuntos()) + "pts");
+		labelPuntajeAProxVida.setText("Nueva Vida en: " + (300 - puntos) + "pts");
 		labelPuntajeTotal.setText("Puntaje Total: " + controlador.getTotalPuntos());
 	}
 
@@ -319,45 +321,57 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent arg0) {
-		if (arg0.getKeyCode() == KeyEvent.VK_RIGHT) {
-			this.destino.x = this.destino.x + 30;
-			if (this.destino.x > 960) {
-				this.destino.x = 960;
-			}
-			this.mira.setBounds(this.destino.x, 50, 50, 50);
-			System.out.println(this.destino.x);
-		}
+		int keyCode = arg0.getKeyCode();
+		switch(keyCode) {
+			case KeyEvent.VK_UP:
+				multiplicadorPotencia = multiplicadorPotencia + 0.1;
+				if (multiplicadorPotencia > 1.5) {
+					multiplicadorPotencia = 1.5;
+				}
+				break;
 
-		if (arg0.getKeyCode() == KeyEvent.VK_LEFT) {
-			this.destino.x = this.destino.x - 30;
-			if (this.destino.x < 0) {
-				this.destino.x = 0;
-			}
-			this.mira.setBounds(this.destino.x, 50, 50, 50);
-			System.out.println(this.destino.x);
-		}
+			case KeyEvent.VK_DOWN:
+				multiplicadorPotencia = multiplicadorPotencia - 0.1;
+				if (multiplicadorPotencia < 0.5) {
+					multiplicadorPotencia = 0.5;
+				}
+				break;
 
-		//Este metodo es para la potencia del misil
-		if (arg0.getKeyCode() == KeyEvent.VK_SPACE ) {
-			System.out.println("Potencia de disparo");
-			//TODO: agregar timer para la potancia del disparo
+			case KeyEvent.VK_LEFT:
+				this.destino.x = this.destino.x - 30;
+				if (this.destino.x < 0) {
+					this.destino.x = 0;
+				}
+				this.mira.setBounds(this.destino.x, 50, 50, 50);
+				System.out.println(this.destino.x);
+				break;
+
+			case KeyEvent.VK_RIGHT :
+				this.destino.x = this.destino.x + 30;
+				if (this.destino.x > 960) {
+					this.destino.x = 960;
+				}
+				this.mira.setBounds(this.destino.x, 50, 50, 50);
+				System.out.println(this.destino.x);
+				break;
+
+			case KeyEvent.VK_SPACE :
+				Point fin = new Point(this.destino.x, 0);
+				boolean disparo = controlador.dispararBarco(fin, this.multiplicadorPotencia);
+				System.out.println("Se ha disparado, velocidad: " + multiplicadorPotencia);
+				if (disparo) {
+					cargaMisilTimer.restart();
+				}
+				break;
 		}
 	}
 
 	public void keyReleased(KeyEvent a) {
-		Point fin = new Point(this.destino.x, 0);
-		if (a.getKeyCode() == KeyEvent.VK_SPACE ) {
-			boolean disparo = controlador.dispararBarco(fin);
-			System.out.println("Se ha disparado");
-			if (disparo) {
-				cargaMisilTimer.restart();
-			}
-		}
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 }

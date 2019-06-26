@@ -17,6 +17,7 @@ public class Controlador {
 	private int vidas = 3;
 	private int puntos;
 	private int velocidad = 2;
+	private double velocidadPotenciada = 0;
 	private int cantBarcos = 0;
 	private int cantBarcosEliminados;
 	private boolean estaJugando = true;
@@ -144,11 +145,12 @@ public class Controlador {
 		}
 	}
 
-	public boolean dispararBarco(Point fin) {
+	public boolean dispararBarco(Point fin, double potencia) {
 		boolean disparo = this.tanque != null && this.puedeDisparar;
 		if (disparo == true) {
 			this.puedeDisparar = false;
-			this.misil = this.tanque.disparar(fin, this.velocidad);
+			this.velocidadPotenciada = this.velocidad * potencia;
+			this.misil = this.tanque.disparar(fin, velocidadPotenciada);
 		}
 		return disparo;
 	}
@@ -197,7 +199,7 @@ public class Controlador {
 
 	public Misil moverMisil() {
 		if (this.misil != null) {
-			this.misil.moverse(this.velocidad);
+			this.misil.moverse(this.velocidadPotenciada);
 		}
 		return this.misil;
 	}

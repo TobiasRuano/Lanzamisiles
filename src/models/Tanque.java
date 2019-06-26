@@ -24,7 +24,7 @@ public class Tanque {
 		return this.nombre;
 	}
 
-	public Misil disparar(Point fin, int velocidad) {
+	public Misil disparar(Point fin, double velocidad) {
 		Point origen = new Point();
 		origen.x = this.x;
 		origen.y = this.y;
