@@ -30,13 +30,7 @@
 * Aprobar la evaluación final sobre TPO.
 
 ## Fases de Entregas
-* Fase A : Definición de los requerimientos y diagrama de clases. 
-* Fase B : Diagramas de secuencia (todos los requerimientos). 
-* Fase C : Código del negocio funcionando con controlador y test. 
-* Final : Interfaz gráfica que utilice el negocio entregado en la Fase C.
-
-## Fechas de Entrega
-* Fase A : 16/05/2019. 
-* Fase B : 30/05/2019. 
-* Fase C : 13/06/2019. 
-* Final : 04/07/2019.
+* Fase A - 16/05/2019: Definición de los requerimientos y diagrama de clases. 
+* Fase B - 30/05/2019: Diagramas de secuencia (todos los requerimientos). 
+* Fase C - 13/06/2019: Código del negocio funcionando con controlador y test. 
+* Final  - 04/07/2019: Interfaz gráfica que utilice el negocio entregado en la Fase C.
