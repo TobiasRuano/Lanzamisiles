@@ -9,7 +9,7 @@ public class Jugador {
 		setNombre(nombre);
 	}
 
-	private void setNombre(String nombre) {
+	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 

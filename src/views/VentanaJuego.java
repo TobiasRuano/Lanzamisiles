@@ -29,6 +29,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private JLabel labelNivel = new JLabel("Nivel: 1");
 	private JLabel labelBarcosHundidos = new JLabel();
 	private JLabel labelBarcosRestantes = new JLabel();
+	private JLabel labelPotencia = new JLabel();
 
 	private double multiplicadorPotencia = 1;
 
@@ -54,7 +55,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	}
 
 	private void configurar(String dificultad, String nombre) {
-		this.controlador = new Controlador(dificultad, nombre);
+		this.controlador = Controlador.miInstancia(dificultad, nombre);
 
 		this.contenedor = this.getContentPane();
 		this.contenedor.setLayout(null);
@@ -65,7 +66,6 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		this.setTitle("Lanzamisiles");
 		addKeyListener(this);
 
-
 		botonSalir = new JButton("Salir");
 
 		destino = new Point(500, 600);
@@ -74,6 +74,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		labelVidas.setBounds(115, 25, 75, 25);
 		labelPuntajeAProxVida.setBounds(220, 25, 150, 25);
 		labelPuntajeTotal.setBounds(390, 25, 150, 25);
+		labelPotencia.setBounds(830, 655, 150, 25);
 		labelBarcosHundidos.setBounds(580, 25, 150, 25);
 		labelBarcosRestantes.setBounds(750, 25, 150, 25);
 		botonSalir.setBounds(920, 25, 60, 25);
@@ -84,17 +85,17 @@ public class VentanaJuego extends JFrame implements KeyListener {
 
 		mira.setIcon(new ImageIcon(urlImagenMira));
 
-		labelNivel.setText("Nivel: " + (controlador.getNivel() + 1));
+		labelNivel.setText("Nivel: " + controlador.getNivel());
 		labelVidas.setText("Vidas: " + controlador.getVidas());
 		labelPuntajeAProxVida.setText("Nueva Vida en: " + (300 - controlador.getPuntos()) + "pts");
 		labelBarcosHundidos.setText("Barcos Hundidos: " + controlador.getCantBarcosEliminados());
 		labelPuntajeTotal.setText("Puntaje Total: " + controlador.getTotalPuntos());
 		labelBarcosRestantes.setText("Barcos Restantes: " + ( 10 - controlador.getCantBarcos()));
+		labelPotencia.setText("Potencia: " + this.multiplicadorPotencia + "/1,5");
 
 		barco.setVisible(true);
 
-		//contenedor.add(botonSalir); //TODO: arranca seleccionado, no puedo disparar.
-		//this.getRootPane().setDefaultButton(null);
+		botonSalir.setFocusable(false);
 
 		contenedor.add(labelNivel);
 		contenedor.add(labelVidas);
@@ -102,9 +103,11 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		contenedor.add(labelPuntajeTotal);
 		contenedor.add(labelBarcosHundidos);
 		contenedor.add(labelBarcosRestantes);
+		contenedor.add(labelPotencia);
 		contenedor.add(tanque);
 		contenedor.add(barco);
 		contenedor.add(mira);
+		contenedor.add(botonSalir);
 
 		presentarTanque(this.controlador.crearTanque(nombre));
 	}
@@ -133,7 +136,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 				controlador.puedeDisparar(true);
 			}
 		};
-		this.cargaMisilTimer = new Timer(1000, misilL); // ese 1000 es el tiempo de carga del misil 1s
+		int intervalo = (int) (this.controlador.getIntervaloDisparos() * 1000.0);
+		this.cargaMisilTimer = new Timer(intervalo, misilL); // ese 1000 es el tiempo de carga del misil 1s
 		this.cargaMisilTimer.start();
 	}
 
@@ -307,38 +311,44 @@ public class VentanaJuego extends JFrame implements KeyListener {
 
 	private void finDelNivel() {
 		if (controlador.avanzaNivel() == true) {
-			JOptionPane.showMessageDialog(contenedor, "Nivel " + controlador.getNivel() + " Completado!");
+			JOptionPane.showMessageDialog(this.contenedor, "Nivel " + (controlador.getNivel() - 1) + " Completado!");
 		} else {
 			if (controlador.perdio() == true) {
-				JOptionPane.showMessageDialog(contenedor, "Fin del Juego! Puntuacion: " + controlador.getTotalPuntos());
+				JOptionPane.showMessageDialog(this.contenedor, "Fin del Juego! Puntuacion: " + controlador.getTotalPuntos());
 				this.setVisible(false);
 				VentanaPrincipal principal = new VentanaPrincipal();
 				principal.setVisible(true);
 			} else {
-				JOptionPane.showMessageDialog(contenedor, "Nivel " + controlador.getNivel() + " no Completado");
+				JOptionPane.showMessageDialog(this.contenedor, "Nivel " + controlador.getNivel() + " no Completado");
 			}
 		}
+		labelNivel.setText("Nivel: " + controlador.getNivel());
 	}
 
 	public void keyPressed(KeyEvent arg0) {
 		int keyCode = arg0.getKeyCode();
+		String strDouble = "";
 		switch(keyCode) {
 			case KeyEvent.VK_UP:
-				multiplicadorPotencia = multiplicadorPotencia + 0.1;
-				if (multiplicadorPotencia > 1.5) {
-					multiplicadorPotencia = 1.5;
+				this.multiplicadorPotencia = this.multiplicadorPotencia + 0.1;
+				if (this.multiplicadorPotencia > 1.5) {
+					this.multiplicadorPotencia = 1.5;
 				}
+				strDouble = String.format("%.1f", this.multiplicadorPotencia);
+				labelPotencia.setText("Potencia: " + strDouble + "/1,5");
 				break;
 
 			case KeyEvent.VK_DOWN:
-				multiplicadorPotencia = multiplicadorPotencia - 0.1;
-				if (multiplicadorPotencia < 0.5) {
-					multiplicadorPotencia = 0.5;
+				this.multiplicadorPotencia = this.multiplicadorPotencia - 0.1;
+				if (this.multiplicadorPotencia < 0.5) {
+					this.multiplicadorPotencia = 0.5;
 				}
+				strDouble = String.format("%.1f", this.multiplicadorPotencia);
+				labelPotencia.setText("Potencia: " + strDouble + "/1,5");
 				break;
 
 			case KeyEvent.VK_LEFT:
-				this.destino.x = this.destino.x - 30;
+				this.destino.x = this.destino.x - controlador.getSensibilidadMira();
 				if (this.destino.x < 0) {
 					this.destino.x = 0;
 				}
@@ -347,7 +357,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 				break;
 
 			case KeyEvent.VK_RIGHT :
-				this.destino.x = this.destino.x + 30;
+				this.destino.x = this.destino.x + controlador.getSensibilidadMira();
 				if (this.destino.x > 960) {
 					this.destino.x = 960;
 				}
@@ -358,7 +368,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			case KeyEvent.VK_SPACE :
 				Point fin = new Point(this.destino.x, 0);
 				boolean disparo = controlador.dispararBarco(fin, this.multiplicadorPotencia);
-				System.out.println("Se ha disparado, velocidad: " + multiplicadorPotencia);
+				System.out.println("Se ha disparado, velocidad: " + this.multiplicadorPotencia);
 				if (disparo) {
 					cargaMisilTimer.restart();
 				}

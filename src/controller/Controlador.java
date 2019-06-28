@@ -8,6 +8,8 @@ import models.*;
 
 public class Controlador {
 
+	private static Controlador instancia = null;
+
 	private Jugador jugador;
 	private Tanque tanque;
 	private Barco barco;
@@ -17,19 +19,40 @@ public class Controlador {
 	private int vidas = 3;
 	private int puntos;
 	private int velocidad = 2;
-	private double velocidadPotenciada = 0;
+	private int totalPuntos = 0;
 	private int cantBarcos = 0;
 	private int cantBarcosEliminados;
+	private int sensibilidadMira = 30;
+	private int cantNiveles = 5;
+	private int cantNivelesJugados = 0;
+	private double velocidadPotenciada = 0;
+	private Double intervaloDisparo = 1.0;
 	private boolean estaJugando = true;
 	private boolean puedeDisparar = true;
 	private Random booleanDireccionBarco;
-  private int totalPuntos = 0;
 
-	public Controlador(String dificultad, String nombre) {
+	private Controlador(String dificultad, String nombre) {
 		this.crearJugador(nombre);
 		this.crearTanque(nombre); // En vez de pasar un string, deberia quizas pasar un objeto jugador.
 		this.dificultad = dificultad; //TODO: implementar la dificultad de los barcos
-		this.booleanDireccionBarco = new Random(); // boolean al azar para definir la direccion en la creaccion de los barcos
+		this.booleanDireccionBarco = new Random();
+	}
+
+	public static Controlador miInstancia(String dificultad, String nombre) {
+		if (instancia == null) {
+			instancia = new Controlador(dificultad, nombre);
+		}
+		if (dificultad != "sin dificuldad") {
+			instancia.setDificultad(dificultad);
+		}
+		if (nombre != "sin nombre") {
+			instancia.jugador.setNombre(nombre);
+		}
+		return instancia;
+	}
+
+	private void setDificultad(String dif) {
+		dificultad = dif;
 	}
 
 	public Jugador crearJugador(String nombre) {
@@ -62,12 +85,28 @@ public class Controlador {
 		return this.tanque;
 	}
 
+	public void setIntervaloDisparos(double intervalo) {
+		this.intervaloDisparo = intervalo;
+	}
+
+	public Double getIntervaloDisparos() {
+		return this.intervaloDisparo;
+	}
+
+	public void setSensibilidadMira(int sensibilidad) {
+		this.sensibilidadMira = sensibilidad;
+	}
+
+	public int getSensibilidadMira() {
+		return this.sensibilidadMira;
+	}
+
 	public int getPuntos() {
-		return puntos;
+		return this.puntos;
 	}
 
 	public Random getBooleanDireccionBarco() {
-		return booleanDireccionBarco;
+		return this.booleanDireccionBarco;
 	}
 
 	public Rectangle getPosicionMisil() {
@@ -79,27 +118,31 @@ public class Controlador {
 	}
 
 	public int getVelocidad() {
-		return velocidad;
+		return this.velocidad;
+	}
+
+	public void setCantNiveles(int cant) {
+		this.cantNiveles = cant;
 	}
 
 	public int getNivel() {
-		return (velocidad / 2) - 1;
+		return (this.cantNivelesJugados + 1);
 	}
 
 	public int getCantBarcos() {
-		return cantBarcos;
+		return this.cantBarcos;
 	}
 
 	public int getCantBarcosEliminados() {
-		return cantBarcosEliminados;
+		return this.cantBarcosEliminados;
 	}
 
 	public int getVidas() {
-		return vidas;
+		return this.vidas;
 	}
 
 	public boolean estaJugando() {
-		return estaJugando;
+		return this.estaJugando;
 	}
 
 	public boolean existeBarco() {
@@ -124,15 +167,20 @@ public class Controlador {
 
 	public boolean avanzaNivel() {
 		boolean avanza = this.cantBarcosEliminados >= 5;
+		boolean finJuego = this.getNivel() >= this.cantNiveles;
 		this.cantBarcos = 0;
 		this.cantBarcosEliminados = 0;
 		if (avanza) {
 			this.incrementarPuntos(100);
 			this.velocidad += 2;
+			this.cantNivelesJugados += 1;
 		} else {
 			this.vidas--;
 		}
 		this.jugador.setPuntos(puntos);
+		if (finJuego) {
+			return false;
+		}
 		return avanza;
 	}
 
@@ -220,7 +268,12 @@ public class Controlador {
 	}
 
 	public boolean perdio() {
-		return this.vidas == 0;
+		if (this.vidas == 0) {
+			return true;
+		} else if (this.cantNivelesJugados >= this.cantNiveles) {
+			return true;
+		}
+		return false;
 	}
 
 }
