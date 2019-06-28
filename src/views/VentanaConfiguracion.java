@@ -140,7 +140,11 @@ public class VentanaConfiguracion extends JFrame {
       public void actionPerformed(ActionEvent e) {
         String text = cantNiveles.getText();
         int cant = Integer.parseInt(text);
-        System.out.println(cant);
+        System.out.println("El usuario ingreso: " + cant);
+        if (cant < 5) {
+          cantNiveles.setText("5");
+          cant = 5;
+        }
         controlador.setCantNiveles(cant);
       }
     });
