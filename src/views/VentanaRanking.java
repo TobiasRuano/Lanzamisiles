@@ -15,8 +15,6 @@ public class VentanaRanking extends JFrame{
 
   JFrame aux;
   JButton botonSalir;
-  JLabel[] labelPuntaje;
-  JLabel[] labelNombre;
 
 
   public VentanaRanking(JFrame principal) {
@@ -29,11 +27,11 @@ public class VentanaRanking extends JFrame{
     Container contenedor = this.getContentPane();
     contenedor.setLayout(null);
 
-    this.setSize(800, 600);
+    this.setSize(600, 400);
     this.setResizable(false);
 
     botonSalir = new JButton("Atras");
-    botonSalir.setBounds(715, 25, 60, 40);
+    botonSalir.setBounds(535, 25, 60, 25);
 
     contenedor.add(botonSalir);
 
@@ -41,7 +39,7 @@ public class VentanaRanking extends JFrame{
 
   private void eventos() {
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-    
+
     botonSalir.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
