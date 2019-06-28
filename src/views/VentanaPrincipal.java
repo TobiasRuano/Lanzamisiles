@@ -14,6 +14,7 @@ public class VentanaPrincipal extends JFrame{
   JButton botonDificil;
   JButton botonSalir;
   JButton botonPuntajes;
+  JButton botonConfiguracion;
   JTextField textNombre;
   JLabel labelNombre;
 
@@ -33,6 +34,7 @@ public class VentanaPrincipal extends JFrame{
     botonDificil = new JButton("Dificil");
     botonSalir = new JButton("Salir");
     botonPuntajes = new JButton("Puntajes Altos");
+    botonConfiguracion = new JButton("Ajustes");
     labelNombre = new JLabel("Ingrese Nombre:");
     textNombre = new JTextField();
 
@@ -42,6 +44,7 @@ public class VentanaPrincipal extends JFrame{
     botonDificil.setBounds(346, 180, 110, 40);
     botonPuntajes.setBounds(30, 340, 110, 40);
     botonSalir.setBounds(470, 340, 110, 40);
+    botonConfiguracion.setBounds(245, 340, 110, 40);
 
     contenedor.add(labelNombre);
     contenedor.add(textNombre);
@@ -49,6 +52,7 @@ public class VentanaPrincipal extends JFrame{
     contenedor.add(botonDificil);
     contenedor.add(botonPuntajes);
     contenedor.add(botonSalir);
+    contenedor.add(botonConfiguracion);
 
   }
 
@@ -85,6 +89,14 @@ public class VentanaPrincipal extends JFrame{
         VentanaPrincipal.this.setVisible(false);
 			}
 		});
+    botonConfiguracion.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        VentanaConfiguracion ajustes = new VentanaConfiguracion(VentanaPrincipal.this);
+        ajustes.setVisible(true);
+        VentanaPrincipal.this.setVisible(false);
+      }
+    });
 
   }
 
