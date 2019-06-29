@@ -26,7 +26,7 @@ public class Controlador {
 	private int cantNiveles = 5;
 	private int cantNivelesJugados = 0;
 	private double velocidadPotenciada = 0;
-	private Double intervaloDisparo = 1.0;
+	private double intervaloDisparo = 1.0;
 	private boolean estaJugando = true;
 	private boolean puedeDisparar = true;
 	private Random booleanDireccionBarco;

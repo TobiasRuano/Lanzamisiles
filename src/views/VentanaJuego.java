@@ -155,8 +155,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private void crearTempLabels() {
 		ActionListener labelsL = new ActionListener() {
 			public void actionPerformed(ActionEvent l) {
-				actualizarVidas();
-				actualizarPuntaje();
+				actualizarLabelVidas();
+				actualizarLabelsPuntaje();
 			}
 		};
 		this.labelsTimer = new Timer(100, labelsL);
@@ -290,21 +290,21 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			this.misil = null;
 			this.barco = null;
 		}
-		actualizarBarcos();
+		actualizarLabelsBarcos();
 	}
 
-	private void actualizarBarcos() {
+	private void actualizarLabelsBarcos() {
 		labelBarcosHundidos.setText("Barcos Hundidos: " + controlador.getCantBarcosEliminados());
 		labelBarcosRestantes.setText("Barcos Restantes: " + ( 10 - controlador.getCantBarcos()));
 	}
 
-	private void actualizarPuntaje() {
+	private void actualizarLabelsPuntaje() {
 		int puntos = controlador.getPuntos();
 		labelPuntajeAProxVida.setText("Nueva Vida en: " + (300 - puntos) + "pts");
 		labelPuntajeTotal.setText("Puntaje Total: " + controlador.getTotalPuntos());
 	}
 
-	private void actualizarVidas() {
+	private void actualizarLabelVidas() {
 		int vidas = controlador.getVidas();
 		labelVidas.setText("Vidas: " + vidas);
 	}
