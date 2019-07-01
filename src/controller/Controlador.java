@@ -31,11 +31,16 @@ public class Controlador {
 	private boolean puedeDisparar = true;
 	private Random booleanDireccionBarco;
 
+	private String []arrayNombreRanking;
+	private int []arrayPuntosRanking;
+
 	private Controlador(String dificultad, String nombre) {
 		this.crearJugador(nombre);
 		this.crearTanque(nombre); // En vez de pasar un string, deberia quizas pasar un objeto jugador.
-		this.dificultad = dificultad; //TODO: implementar la dificultad de los barcos
+		this.dificultad = dificultad;
 		this.booleanDireccionBarco = new Random();
+		this.setPuntiacion();
+		this.configurarDificultad();
 	}
 
 	public static Controlador miInstancia(String dificultad, String nombre) {
@@ -53,6 +58,14 @@ public class Controlador {
 
 	private void setDificultad(String dif) {
 		dificultad = dif;
+	}
+
+	private void configurarDificultad() {
+		if (this.dificultad == "Dificil") {
+			velocidad = 4;
+		} else if (this.dificultad == "Facil") {
+			velocidad = 2;
+		}
 	}
 
 	public Jugador crearJugador(String nombre) {
@@ -268,12 +281,63 @@ public class Controlador {
 	}
 
 	public boolean perdio() {
-		if (this.vidas == 0) {
+		if (this.vidas <= 0) {
+			this.setPuntuacionFinal();
 			return true;
 		} else if (this.cantNivelesJugados >= this.cantNiveles) {
+			this.setPuntuacionFinal();
 			return true;
 		}
 		return false;
+	}
+
+	private void setPuntiacion() {
+		int i = 0;
+		arrayNombreRanking = new String[10];
+		arrayPuntosRanking = new int[10];
+		while (i < 10) {
+			this.arrayNombreRanking[i] = "- - - -";
+			this.arrayPuntosRanking[i] = 0;
+			i += 1;
+		}
+//		i=0;
+//		while (i < 10) {
+//			System.out.println(this.arrayNombreRanking[i]);
+//			System.out.println(this.arrayPuntosRanking[i]);
+//			i += 1;
+//		}
+	}
+
+	public void setPuntuacionFinal() {
+		int i = 0;
+		while (i < 10 && this.arrayPuntosRanking[i] > this.jugador.getPuntos()) {
+			i += 1;
+		}
+		if (i < 10) {
+			int j = 9;
+			while (j > i) {
+				this.arrayNombreRanking[j] = this.arrayNombreRanking[j-1];
+				this.arrayPuntosRanking[j] = this.arrayPuntosRanking[j-1];
+				j -= 1;
+			}
+			this.arrayNombreRanking[i] = this.jugador.getNombre();
+			this.arrayPuntosRanking[i] = this.jugador.getPuntos();
+		}
+		
+		i=0;
+		while (i < 10) {
+			System.out.println(this.arrayNombreRanking[i]);
+			System.out.println(this.arrayPuntosRanking[i]);
+			i += 1;
+		}
+	}
+
+	public String[] getArrayNombres() {
+		return arrayNombreRanking;
+	}
+	
+	public int[] getArrayPuntos() {
+		return arrayPuntosRanking;
 	}
 
 }
