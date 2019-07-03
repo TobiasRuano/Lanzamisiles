@@ -51,6 +51,7 @@ public class VentanaRanking extends JFrame{
       suma += 30;
       a += 1;
     }
+
     a = 0;
     suma = 80;
     while (a < 10) {
@@ -58,7 +59,6 @@ public class VentanaRanking extends JFrame{
       suma += 30;
       a += 1;
     }
-
     botonSalir.setBounds(535, 25, 60, 25);
 
     contenedor.add(botonSalir);

@@ -122,9 +122,10 @@ public class VentanaJuego extends JFrame implements KeyListener {
 				VentanaJuego.this.setVisible(false);
 				VentanaJuego.this.movimientoTimer = null;
 				eliminar();
+				guardarPuntos();
 			}
 		});
-		
+
 		System.out.println("nueva ventana");
 
 		crearTempMovimiento();
@@ -133,7 +134,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		crearTempFueraVista();
 		crearTempRecarga();
 	}
-	
+
 	private void eliminar() {
 		VentanaJuego.this.dispose();
 		contenedor = null; // con esto detengo el juego, pero el timer para la distancia entre disparos no funciona bien
@@ -147,7 +148,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			}
 		};
 		int intervalo = (int) (this.controlador.getIntervaloDisparos() * 1000.0);
-		this.cargaMisilTimer = new Timer(intervalo, misilL); // ese 1000 es el tiempo de carga del misil 1s
+		this.cargaMisilTimer = new Timer(intervalo, misilL);
 		this.cargaMisilTimer.start();
 	}
 
@@ -317,6 +318,10 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private void actualizarLabelVidas() {
 		int vidas = controlador.getVidas();
 		labelVidas.setText("Vidas: " + vidas);
+	}
+
+	private void guardarPuntos() {
+		this.controlador.guardar();
 	}
 
 	private void finDelNivel() {

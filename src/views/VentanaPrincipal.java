@@ -53,7 +53,6 @@ public class VentanaPrincipal extends JFrame{
     contenedor.add(botonPuntajes);
     contenedor.add(botonSalir);
     contenedor.add(botonConfiguracion);
-
   }
 
   private void eventos() {

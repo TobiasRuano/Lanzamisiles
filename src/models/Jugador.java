@@ -18,13 +18,13 @@ public class Jugador {
 	}
 
 	public void setPuntos(int puntos) {
-		this.puntos += this.puntos + puntos;
+		this.puntos = puntos;
 	}
 
 	public int getPuntos() {
 		return this.puntos;
 	}
-	
+
 	public void resetPuntos() {
 		this.puntos = 0;
 	}

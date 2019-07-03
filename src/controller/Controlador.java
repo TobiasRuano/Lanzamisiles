@@ -208,11 +208,17 @@ public class Controlador {
 		} else {
 			this.vidas--;
 		}
-		this.jugador.setPuntos(puntos);
+		// this.jugador.setPuntos(puntos);
+		this.jugador.setPuntos(this.totalPuntos);
 		if (finJuego) {
 			return false;
 		}
 		return avanza;
+	}
+
+	public void guardar() {
+		this.jugador.setPuntos(this.totalPuntos);
+		this.setPuntuacionFinal();
 	}
 
 	public void nuevoBarco() {
@@ -249,14 +255,6 @@ public class Controlador {
 		}
 	}
 
-	public Rectangle posicionBarco() {
-		if (this.barco != null) {
-			return this.barco.getPosicion();
-		} else {
-			return null;
-		}
-	}
-
 	private boolean mismaPosicion(int startBarcoX, int startBarcoY, int startMisilX, int startMisilY) {
 		int endBarcoX = startBarcoX + 200;
 		int endBarcoY = startBarcoY + 74;
@@ -265,6 +263,14 @@ public class Controlador {
 		boolean x = (startMisilX <= endBarcoX && startMisilX >= startBarcoX) || (endMisilX >= startBarcoX && endMisilX <= endBarcoX);
 		boolean y = (startMisilY <= endBarcoY && startMisilY >= startBarcoY) || (endMisilY >= startBarcoY && endMisilY <= endBarcoY);
 		return x && y;
+	}
+
+	public Rectangle posicionBarco() {
+		if (this.barco != null) {
+			return this.barco.getPosicion();
+		} else {
+			return null;
+		}
 	}
 
 	private void incrementarPuntos(int x) {
