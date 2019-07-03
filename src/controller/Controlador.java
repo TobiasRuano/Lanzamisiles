@@ -18,7 +18,7 @@ public class Controlador {
 	private String dificultad;
 	private int vidas = 3;
 	private int puntos;
-	private int velocidad = 2;
+	private int velocidad = 1;
 	private int totalPuntos = 0;
 	private int cantBarcos = 0;
 	private int cantBarcosEliminados;
@@ -36,7 +36,7 @@ public class Controlador {
 
 	private Controlador(String dificultad, String nombre) {
 		this.crearJugador(nombre);
-		this.crearTanque(nombre); // En vez de pasar un string, deberia quizas pasar un objeto jugador.
+		this.crearTanque(nombre);
 		this.dificultad = dificultad;
 		this.booleanDireccionBarco = new Random();
 		this.setPuntiacion();
@@ -49,23 +49,41 @@ public class Controlador {
 		}
 		if (dificultad != "sin dificuldad") {
 			instancia.setDificultad(dificultad);
+			instancia.reiniciarJuego();
 		}
 		if (nombre != "sin nombre") {
 			instancia.jugador.setNombre(nombre);
+		} else {
+			instancia.jugador.setNombre("Player");
 		}
 		return instancia;
 	}
 
 	private void setDificultad(String dif) {
-		dificultad = dif;
+		this.dificultad = dif;
 	}
 
 	private void configurarDificultad() {
 		if (this.dificultad == "Dificil") {
-			velocidad = 4;
+			velocidad = 3;
+			System.out.println("velocidad seteada: " + velocidad);
 		} else if (this.dificultad == "Facil") {
-			velocidad = 2;
+			velocidad = 1;
+			System.out.println("velocidad seteada: " + velocidad);
 		}
+	}
+
+	private void reiniciarJuego() {
+		configurarDificultad();
+		this.velocidadPotenciada = 0;
+		this.cantNivelesJugados = 0;
+		this.vidas = 3;
+		this.puntos = 0;
+		this.totalPuntos = 0;
+		this.cantBarcos = 0;
+		this.cantBarcosEliminados = 0;
+		this.jugador.resetPuntos();
+		this.barco = null;
 	}
 
 	public Jugador crearJugador(String nombre) {
@@ -154,7 +172,7 @@ public class Controlador {
 		return this.vidas;
 	}
 
-	public boolean estaJugando() {
+	public boolean getEstaJugando() {
 		return this.estaJugando;
 	}
 
@@ -170,11 +188,11 @@ public class Controlador {
 		return this.cantBarcos != 10;
 	}
 
-	public Barco moverBarco(int x) {
+	public Barco moverBarco() {
 		if (this.barco == null) {
 			this.nuevoBarco();
 		}
-		this.barco.moverseEnX(x);
+		this.barco.moverseEnX();
 		return this.barco;
 	}
 
@@ -185,7 +203,7 @@ public class Controlador {
 		this.cantBarcosEliminados = 0;
 		if (avanza) {
 			this.incrementarPuntos(100);
-			this.velocidad += 2;
+			this.velocidad += 1;
 			this.cantNivelesJugados += 1;
 		} else {
 			this.vidas--;
@@ -239,19 +257,19 @@ public class Controlador {
 		}
 	}
 
-	private boolean mismaPosicion(int startBarcoX, int startBarcoY, int xMisil, int yMisil) {
+	private boolean mismaPosicion(int startBarcoX, int startBarcoY, int startMisilX, int startMisilY) {
 		int endBarcoX = startBarcoX + 200;
 		int endBarcoY = startBarcoY + 74;
-		boolean x = xMisil <= endBarcoX && xMisil >= startBarcoX;
-		boolean y = yMisil <= endBarcoY && yMisil >= startBarcoY;
-		/*TODO: agregar la posibilidad de chequear si otra parte del misil esta dentro del area del barco
-		lo haria mediante la implementacion de startMisil y endMisil en X e Y*/
+		int endMisilX = startMisilX + 50;
+		int endMisilY = startMisilY + 100;
+		boolean x = (startMisilX <= endBarcoX && startMisilX >= startBarcoX) || (endMisilX >= startBarcoX && endMisilX <= endBarcoX);
+		boolean y = (startMisilY <= endBarcoY && startMisilY >= startBarcoY) || (endMisilY >= startBarcoY && endMisilY <= endBarcoY);
 		return x && y;
 	}
 
 	private void incrementarPuntos(int x) {
 		this.puntos += x;
-		totalPuntos = totalPuntos + x;
+		this.totalPuntos += x;
 		if (this.puntos >= 300) {
 			this.vidas++;
 			this.puntos = this.puntos - 300;
@@ -300,12 +318,6 @@ public class Controlador {
 			this.arrayPuntosRanking[i] = 0;
 			i += 1;
 		}
-//		i=0;
-//		while (i < 10) {
-//			System.out.println(this.arrayNombreRanking[i]);
-//			System.out.println(this.arrayPuntosRanking[i]);
-//			i += 1;
-//		}
 	}
 
 	public void setPuntuacionFinal() {
@@ -323,19 +335,12 @@ public class Controlador {
 			this.arrayNombreRanking[i] = this.jugador.getNombre();
 			this.arrayPuntosRanking[i] = this.jugador.getPuntos();
 		}
-		
-		i=0;
-		while (i < 10) {
-			System.out.println(this.arrayNombreRanking[i]);
-			System.out.println(this.arrayPuntosRanking[i]);
-			i += 1;
-		}
 	}
 
 	public String[] getArrayNombres() {
 		return arrayNombreRanking;
 	}
-	
+
 	public int[] getArrayPuntos() {
 		return arrayPuntosRanking;
 	}

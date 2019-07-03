@@ -24,5 +24,9 @@ public class Jugador {
 	public int getPuntos() {
 		return this.puntos;
 	}
+	
+	public void resetPuntos() {
+		this.puntos = 0;
+	}
 
 }

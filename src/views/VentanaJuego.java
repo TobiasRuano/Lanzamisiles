@@ -120,14 +120,24 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			public void actionPerformed(ActionEvent e) {
 				aux.setVisible(true);
 				VentanaJuego.this.setVisible(false);
+				VentanaJuego.this.movimientoTimer = null;
+				eliminar();
 			}
 		});
+		
+		System.out.println("nueva ventana");
 
 		crearTempMovimiento();
 		crearTempImpacto();
 		crearTempLabels();
 		crearTempFueraVista();
 		crearTempRecarga();
+	}
+	
+	private void eliminar() {
+		VentanaJuego.this.dispose();
+		contenedor = null; // con esto detengo el juego, pero el timer para la distancia entre disparos no funciona bien
+		System.out.println("elimino ventana");
 	}
 
 	private void crearTempRecarga() {
@@ -166,7 +176,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private void crearTempImpacto() {
 		ActionListener impactoL = new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (controlador.estaJugando() == true) {
+				if (controlador.getEstaJugando() == true) {
 					if (controlador.jugando() != true) {
 						finDelNivel();
 					}
@@ -190,7 +200,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	}
 
 	private void moverBarco() {
-		Barco barco = controlador.moverBarco(1);
+		Barco barco = controlador.moverBarco();
 		presentarBarco(barco);
 	}
 
@@ -318,6 +328,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 				this.setVisible(false);
 				VentanaPrincipal principal = new VentanaPrincipal();
 				principal.setVisible(true);
+				eliminar();
 			} else {
 				JOptionPane.showMessageDialog(this.contenedor, "Nivel " + controlador.getNivel() + " no Completado");
 			}
@@ -368,7 +379,8 @@ public class VentanaJuego extends JFrame implements KeyListener {
 			case KeyEvent.VK_SPACE :
 				Point fin = new Point(this.destino.x, 0);
 				boolean disparo = controlador.dispararBarco(fin, this.multiplicadorPotencia);
-				System.out.println("Se ha disparado, velocidad: " + this.multiplicadorPotencia);
+//				System.out.println("Se ha disparado, velocidad: " + this.multiplicadorPotencia);
+				System.out.println("Se ha disparado, velocidad: " + controlador.getVelocidad());
 				if (disparo) {
 					cargaMisilTimer.restart();
 				}

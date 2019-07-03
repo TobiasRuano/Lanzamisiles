@@ -23,11 +23,17 @@ public class Barco {
 			this.x = 1000;
 			this.path = barcoToLeftURL;
 		}
+		System.out.println("barco creado con velocidad: " + this.velocidad);
 	}
 
-	public int moverseEnX(int x) {
-		this.x += x * this.velocidad;
-		return this.x;
+	public void moverseEnX() {
+		//this.x += x * this.velocidad;
+		if (sentido == true) {
+			this.x += this.velocidad;
+		} else {
+			this.x += this.velocidad;
+		}
+		System.out.println("velocidad: " + this.velocidad);
 	}
 
 	public String getImagePath() {

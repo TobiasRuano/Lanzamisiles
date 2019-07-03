@@ -82,7 +82,7 @@ public class VentanaRanking extends JFrame{
 	  nombres = controlador.getArrayNombres();
 	  puntos = controlador.getArrayPuntos();
 	  int i = 0;
-	  while (nombres[i] != null && i < 9) { //TODO: error de indexOutOfRange
+	  while (i < 10 && nombres[i] != null) {
 		  this.labelNombre[i].setText(nombres[i]);
 		  String texto = Integer.toString(puntos[i]);
 		  this.labelPuntos[i].setText(texto);
