@@ -33,4 +33,4 @@
 * [X] Fase A - 16/05/2019: Definición de los requerimientos y diagrama de clases. 
 * [X] Fase B - 30/05/2019: Diagramas de secuencia (todos los requerimientos). 
 * [X] Fase C - 13/06/2019: Código del negocio funcionando con controlador y test. 
-* [ ] Final  - 04/07/2019: Interfaz gráfica que utilice el negocio entregado en la Fase C.
+* [X] Final  - 04/07/2019: Interfaz gráfica que utilice el negocio entregado en la Fase C.
