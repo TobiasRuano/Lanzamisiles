@@ -1,11 +1,8 @@
 package views;
 
-import models.*;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import controller.Controlador;
@@ -64,9 +61,9 @@ public class VentanaConfiguracion extends JFrame {
     botonSenBaja.setBounds(280, 95, 80, 30);
     botonSenMedia.setBounds(380, 95, 80, 30);
     botonSenAlta.setBounds(480, 95, 80, 30);
-    botonDisparo1.setBounds(280, 155, 80, 30);
-    botonDisparo15.setBounds(380, 155, 80, 30);
-    botonDisparo20.setBounds(480, 155, 80, 30);
+    botonDisparo1.setBounds(280, 155, 110, 30);
+    botonDisparo15.setBounds(380, 155, 110, 30);
+    botonDisparo20.setBounds(480, 155, 110, 30);
     botonSetNivel.setBounds(400, 280, 80, 30);
 
     cantNiveles.setBounds(280, 225, 150, 30);

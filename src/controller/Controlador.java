@@ -184,7 +184,7 @@ public class Controlador {
 		this.puedeDisparar = puede;
 	}
 
-	public boolean jugando() {
+	public boolean restanBarcos() {
 		return this.cantBarcos != 10;
 	}
 

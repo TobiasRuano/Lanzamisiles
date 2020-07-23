@@ -30,21 +30,23 @@ public class VentanaJuego extends JFrame implements KeyListener {
 	private JLabel labelBarcosHundidos = new JLabel();
 	private JLabel labelBarcosRestantes = new JLabel();
 	private JLabel labelPotencia = new JLabel();
-
-	private double multiplicadorPotencia = 1;
-
 	private JLabel tanque = new JLabel();
 	private JLabel misil = new JLabel();
 	private JLabel barco = new JLabel();
 	private JLabel mira = new JLabel();
+
+	private double multiplicadorPotencia = 1;
+	private Point destino;
+
 	private Container contenedor;
+	
 	private Controlador controlador;
+	
 	private Timer movimientoTimer;
 	private Timer fueraVentanaTimer;
 	private Timer labelsTimer;
 	private Timer cargaMisilTimer;
 	private Timer impactoTimer;
-	private Point destino;
 
 	private String urlImagenMira = "/Users/tobiasruano/Developer/Lanzamisiles/src/imagenes/target.png";
 
@@ -178,7 +180,7 @@ public class VentanaJuego extends JFrame implements KeyListener {
 		ActionListener impactoL = new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (controlador.getEstaJugando() == true) {
-					if (controlador.jugando() != true) {
+					if (controlador.restanBarcos() != true) {
 						finDelNivel();
 					}
 					verificarImpacto();
